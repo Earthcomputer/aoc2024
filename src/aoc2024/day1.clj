@@ -4,7 +4,7 @@
     [clojure.string :as str])
 )
 
-(defn parse-input [input]
+(defn- parse-input [input]
   (map
     (fn [line] (map parse-long (str/split line #" +")))
     (str/split-lines input)

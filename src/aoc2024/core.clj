@@ -2,6 +2,7 @@
   (:require
     [aoc2024.util :as util]
     [aoc2024.day1 :refer :all]
+    [aoc2024.day2 :refer :all]
     [clojure.string :as str])
 )
 
@@ -12,6 +13,8 @@
     (case [day part]
       [1 1] (day1-1 input)
       [1 2] (day1-2 input)
+      [2 1] (day2-1 input)
+      [2 2] (day2-2 input)
     )
   )
 )

@@ -12,28 +12,20 @@
 )
 
 (defn day1-1 [input]
-  (reduce
-    +
-    (apply map
-      (fn [x y] (abs (- x y)))
-      (map
-        sort
-        (util/transpose (parse-input input))
-      )
-    )
+  (->> input
+    (parse-input)
+    (util/transpose)
+    (map sort)
+    (apply map #(abs (- %1 %2)))
+    (reduce +)
   )
 )
 
 (defn day1-2 [input]
   (let [[first second] (util/transpose (parse-input input))]
-    (reduce
-      +
-      (map
-        (fn [x]
-          (* x (util/count-occurrences second x))
-        )
-        first
-      )
+    (->> first
+      (map (fn [x] (* x (util/count-occurrences second x))))
+      (reduce +)
     )
   )
 )

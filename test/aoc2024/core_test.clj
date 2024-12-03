@@ -1,20 +1,21 @@
 (ns aoc2024.core-test
   (:require [clojure.test :refer :all]
             [aoc2024.day1 :refer :all]
-            [aoc2024.day2 :refer :all]))
+            [aoc2024.day2 :refer :all]
+            [aoc2024.day3 :refer :all]
+  ))
 
-(deftest day1-1-test
-  (testing "Day 1.1 test"
-    (is (= 11 (day1-1 (slurp "testinputs/day1.txt"))))))
+(defmacro make-test [day part value]
+  `(deftest ~(symbol (str "day" day "-" part "-test"))
+    (testing ~(str "Day " day "." part " test")
+      (is (= ~value (~(symbol (str "day" day "-" part)) (slurp ~(str "testinputs/day" day ".txt")))))
+    )
+  )
+)
 
-(deftest day1-2-test
-  (testing "Day 1.2 test"
-    (is (= 31 (day1-2 (slurp "testinputs/day1.txt"))))))
-
-(deftest day2-1-test
-  (testing "Day 2.1 test"
-    (is (= 2 (day2-1 (slurp "testinputs/day2.txt"))))))
-
-(deftest day2-2-test
-  (testing "Day 2.2 test"
-    (is (= 4 (day2-2 (slurp "testinputs/day2.txt"))))))
+(make-test 1 1 11)
+(make-test 1 2 31)
+(make-test 2 1 2)
+(make-test 2 2 4)
+(make-test 3 1 161)
+(make-test 3 2 48)

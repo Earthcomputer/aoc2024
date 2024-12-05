@@ -19,3 +19,8 @@
 (defn remove-at [vec pos]
   (into (subvec vec 0 pos) (subvec vec (inc pos)))
 )
+
+(defn dbg [x]
+  (println x)
+  x
+)

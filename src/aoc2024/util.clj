@@ -20,6 +20,18 @@
   (into (subvec vec 0 pos) (subvec vec (inc pos)))
 )
 
+(defn index-of-fn [vec pred]
+  (->> vec
+    (map-indexed (fn [i x] (if (pred x) i nil)))
+    (filter some?)
+    (first)
+  )
+)
+
+(defn index-of [vec x]
+  (index-of-fn vec #(= x %))
+)
+
 (defn dbg [x]
   (println x)
   x

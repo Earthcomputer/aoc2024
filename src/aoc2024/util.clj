@@ -32,6 +32,17 @@
   (index-of-fn vec #(= x %))
 )
 
+(defn powi [base exp]
+  (loop [base base exp exp result 1]
+    (cond
+      (= exp 0) result
+      (= exp 1) (* result base)
+      (even? exp) (recur (* base base) (bit-shift-right exp 1) result)
+      :else (recur (* base base) (bit-shift-right exp 1) (* result base))
+    )
+  )
+)
+
 (defn dbg [x]
   (println x)
   x

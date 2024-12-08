@@ -3,5 +3,5 @@
   :url "https://earthcomputer/net/"
   :license {:name "MIT"
             :url "https://mit-license.org/"}
-  :dependencies [[org.clojure/clojure "1.11.1"]]
+  :dependencies [[org.clojure/clojure "1.11.1"] [org.clojure/math.combinatorics "0.3.0"]]
   :repl-options {:init-ns aoc2024.core})

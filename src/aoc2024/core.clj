@@ -11,6 +11,7 @@
     [aoc2024.day8 :refer :all]
     [aoc2024.day9 :refer :all]
     [aoc2024.day10 :refer :all]
+    [aoc2024.day11 :refer :all]
     [clojure.string :as str])
 )
 
@@ -39,6 +40,8 @@
       [9 2] (day9-2 input)
       [10 1] (day10-1 input)
       [10 2] (day10-2 input)
+      [11 1] (day11-1 input)
+      [11 2] (day11-2 input)
     )
   )
 )

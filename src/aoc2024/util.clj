@@ -32,7 +32,8 @@
   (index-of-fn vec #(= x %))
 )
 
-(defn powi [base exp]
+(defn ipow [base exp]
+  {:pre [(not (neg? exp))]}
   (loop [base base exp exp result 1]
     (cond
       (= exp 0) result
@@ -41,6 +42,38 @@
       :else (recur (* base base) (bit-shift-right exp 1) (* result base))
     )
   )
+)
+
+(def ^:private DIGITS_LOG10 [
+   0  0  0  1  1  1  2  2  2  3
+   3  3  3  4  4  4  5  5  5  6
+   6  6  6  7  7  7  8  8  8  9
+   9  9  9 10 10 10 11 11 11 12
+  12 12 12 13 13 13 14 14 14 15
+  15 15 15 16 16 16 17 17 17 18
+  18 18 18
+])
+
+(def ^:private POWERS_OF_10 (vec (take 19 (iterate #(* % 10) 1))))
+
+(defn ipow10 [n]
+  {:pre [(<= 0 n 18)]}
+  (get POWERS_OF_10 n)
+)
+
+; https://stackoverflow.com/q/55032982/11071180
+(defn ilog10 [n]
+  {:pre [(<= 1 n Long/MAX_VALUE)]}
+  (let [
+      lz (bit-xor 63 (Long/numberOfLeadingZeros n))
+      guess (get DIGITS_LOG10 lz)
+    ]
+    (if (< n (get POWERS_OF_10 guess)) (dec guess) guess)
+  )
+)
+
+(defn count-digits [n]
+  (if (zero? n) 1 (inc (ilog10 n)))
 )
 
 (defn dbg [x]

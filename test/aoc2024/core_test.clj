@@ -11,6 +11,7 @@
             [aoc2024.day9 :refer :all]
             [aoc2024.day10 :refer :all]
             [aoc2024.day11 :refer :all]
+            [aoc2024.day12 :refer :all]
   ))
 
 (defmacro make-test [day part value]
@@ -42,3 +43,5 @@
 (make-test 10 1 36)
 (make-test 10 2 81)
 (make-test 11 1 55312)
+(make-test 12 1 1930)
+(make-test 12 2 1206)

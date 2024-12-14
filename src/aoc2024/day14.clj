@@ -19,13 +19,13 @@
       (fn [[x y vx vy]]
         (let [x (mod (+ x (* iterations vx)) WIDTH) y (mod (+ y (* iterations vy)) HEIGHT)]
           (cond
-            (< x 10) (cond
-              (< y 10) [1 0 0 0]
+            (< x (quot WIDTH 2)) (cond
+              (< y (quot HEIGHT 2)) [1 0 0 0]
               (> y (quot HEIGHT 2)) [0 1 0 0]
               :else [0 0 0 0]
             )
-            (> x (- WIDTH 11)) (cond
-              (< y 10) [0 0 1 0]
+            (> x (quot WIDTH 2)) (cond
+              (< y (quot HEIGHT 2)) [0 0 1 0]
               (> y (quot HEIGHT 2)) [0 0 0 1]
               :else [0 0 0 0]
             )

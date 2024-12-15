@@ -76,6 +76,12 @@
   (if (zero? n) 1 (inc (ilog10 n)))
 )
 
+(defn set-in-grid [grid pos value]
+  (let [[y x] pos]
+    (vec (map-indexed (fn [yi line] (if (= yi y) (str (subs line 0 x) value (subs line (inc x))) line)) grid))
+  )
+)
+
 (defn dbg [x]
   (println x)
   x

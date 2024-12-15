@@ -31,12 +31,6 @@
   )
 )
 
-(defn- set-wall [grid pos]
-  (let [[y x] pos]
-    (vec (map-indexed (fn [yi line] (if (= yi y) (str (subs line 0 x) \# (subs line (inc x))) line)) grid))
-  )
-)
-
 (defn day6-2 [input]
   (let [grid (vec (str/split-lines input))]
     (reduce +
@@ -46,7 +40,7 @@
             (fn [x]
               (and
                 (= \. (get-in grid [y x]))
-                (nil? (simulate (set-wall grid [y x])))
+                (nil? (simulate (util/set-in-grid grid [y x] \#)))
               )
             )
             (range (count (get grid y)))

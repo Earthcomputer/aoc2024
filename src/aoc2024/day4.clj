@@ -17,15 +17,8 @@
   (let [wordsearch (str/split-lines input)]
     (reduce +
       (map
-        (fn [y]
-          (reduce +
-            (map
-              (fn [x] (count-matches-at-func wordsearch x y))
-              (range (count (get wordsearch y)))
-            )
-          )
-        )
-        (range (count wordsearch))
+        (fn [[x y]] (count-matches-at-func wordsearch x y))
+        (util/grid-coords wordsearch)
       )
     )
   )

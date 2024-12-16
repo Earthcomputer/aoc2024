@@ -1,21 +1,15 @@
 (ns aoc2024.day10
-  (:require [clojure.string :as str]))
+  (:require [aoc2024.util :as util]
+            [clojure.string :as str]))
 
 (def ^:private directions [[-1 0] [1 0] [0 -1] [0 1]])
 
 (defn- run [input func]
   (let [grid (vec (str/split-lines input))]
     (reduce +
-      (map-indexed
-        (fn [y line]
-          (reduce +
-            (map
-              (fn [x] (if (= (get-in grid [y x]) \0) (func grid x y) 0))
-              (range (count line))
-            )
-          )
-        )
-        grid
+      (map
+        (fn [[x y]] (if (= (get-in grid [y x]) \0) (func grid x y) 0))
+        (util/grid-coords grid)
       )
     )
   )

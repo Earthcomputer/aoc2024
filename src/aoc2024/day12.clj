@@ -1,5 +1,6 @@
 (ns aoc2024.day12
-  (:require [clojure.string :as str]))
+  (:require [aoc2024.util :as util]
+            [clojure.string :as str]))
 
 (def ^:private directions (vec (partition 2 1 [[-1 0] [0 -1] [1 0] [0 1] [-1 0]])))
 
@@ -31,22 +32,16 @@
   (let [grid (vec (str/split-lines input))]
     (first
       (reduce
-        (fn [[result visited] y]
-          (reduce
-            (fn [[result visited] x]
-              (if (contains? visited [x y])
-                [result visited]
-                (let [[perimeter area visited] (get-perimeter-area grid x y visited part2)]
-                  [(+ result (* perimeter area)) visited]
-                )
-              )
-            )
+        (fn [[result visited] [x y]]
+          (if (contains? visited [x y])
             [result visited]
-            (range (count (get grid y)))
+            (let [[perimeter area visited] (get-perimeter-area grid x y visited part2)]
+              [(+ result (* perimeter area)) visited]
+            )
           )
         )
         [0 #{}]
-        (range (count grid))
+        (util/grid-coords grid)
       )
     )
   )

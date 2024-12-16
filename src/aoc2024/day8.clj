@@ -9,20 +9,7 @@
       antennae (reduce
         (fn [map [char x y]] (merge-with into map {char [[x y]]}))
         {}
-        (apply concat
-          (map-indexed
-            (fn [y line]
-              (remove
-                (fn [[char]] (= char \.))
-                (map-indexed
-                  (fn [x char] [char x y])
-                  line
-                )
-              )
-            )
-            grid
-          )
-        )
+        (remove (fn [[char]] (= char \.)) (map (fn [[x y]] [(get-in grid [y x]) x y]) (util/grid-coords grid)))
       )
     ]
     (util/count-matches
@@ -39,12 +26,7 @@
           antennae
         )
       )
-      (apply concat
-        (map-indexed
-          (fn [y line] (map (fn [x] [x y]) (range (count line))))
-          grid
-        )
-      )
+      (util/grid-coords grid)
     )
   )
 )

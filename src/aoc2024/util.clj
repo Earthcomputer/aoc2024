@@ -82,6 +82,63 @@
   )
 )
 
+(defn grid-coords [grid]
+  (apply concat (map-indexed (fn [y line] (map (fn [x] [x y]) (range (count line)))) grid))
+)
+
+(defn find-in-grid [grid predicate]
+  (first (filter (fn [[x y]] (predicate (get-in grid [y x]))) (grid-coords grid)))
+)
+
+(defn shortest-distances-from
+  "Computes the shortest distances from 'from' to the first node that matches 'stop-at', and all nodes closer than that
+  node. Returns a pair containing the node stopped at and a map from node to distance. 'adjacent-func' takes a node as
+  input and returns an iterable of pairs whose first values are the adjacent nodes and second values are the distances
+  to the adjacent nodes."
+  ([from adjacent-func] (shortest-distances-from from #(false) adjacent-func))
+  ([from stop-at adjacent-func]
+    (loop [
+        distances {from 0}
+        to-visit (sorted-set [0 from])
+      ]
+      (let [[dist node] (first to-visit)]
+        (cond
+          (nil? dist) [nil distances]
+          (stop-at node) [node distances]
+          :else (let [
+              adjacent (map (fn [[n d]] [n (+ dist d)]) (adjacent-func node))
+              to-visit (into
+                (disj to-visit [dist node])
+                (map
+                  (fn [[n d]] [d n])
+                  (filter
+                    (fn [[n d]]
+                      (let [prev-d (get distances n)]
+                        (or (nil? prev-d) (< d prev-d))
+                      )
+                    )
+                    adjacent
+                  )
+                )
+              )
+              distances (merge-with min distances (into {} adjacent))
+            ]
+            (recur distances to-visit)
+          )
+        )
+      )
+    )
+  )
+)
+
+(defn shortest-distance
+  "Computes the shortest distance from 'from' to any node that matches 'is-dest?'. 'adjacent-func' takes a node as input
+  and returns an iterable of pairs whose first values are the adjacent nodes and second values are the distances to the
+  adjacent nodes."
+  [from is-dest? adjacent-func]
+  (let [[dest distances] (shortest-distances-from from is-dest? adjacent-func)] (get distances dest))
+)
+
 (defn dbg [x]
   (println x)
   x

@@ -111,12 +111,7 @@
 
 (defn- run [grid instructions move-func]
   (let [
-      [robot-x robot-y] (first
-        (filter
-          (fn [[x y]] (= \@ (get-in grid [y x])))
-          (apply concat (map (fn [y] (map (fn [x] [x y]) (range (count (get grid y))))) (range (count grid))))
-        )
-      )
+      [robot-x robot-y] (util/find-in-grid grid #(= \@ %))
       grid (util/set-in-grid grid [robot-y robot-x] \.)
       [grid] (reduce
         (fn [[grid robot-x robot-y] instruction] (move-func grid robot-x robot-y instruction))
@@ -129,7 +124,7 @@
         (fn [[x y]] (+ x (* y 100)))
         (filter
           (fn [[x y]] (or (= \O (get-in grid [y x])) (= \[ (get-in grid [y x]))))
-          (apply concat (map (fn [y] (map (fn [x] [x y]) (range (count (get grid y))))) (range (count grid))))
+          (util/grid-coords grid)
         )
       )
     )

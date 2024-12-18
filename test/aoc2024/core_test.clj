@@ -16,14 +16,15 @@
             [aoc2024.day15 :refer :all]
             [aoc2024.day16 :refer :all]
             [aoc2024.day17 :refer :all]
+            [aoc2024.day18 :refer :all]
   ))
 
 (defmacro make-test
   ([day part value] `(make-test ~day ~part ~value ~(str "day" day)))
-  ([day part value input-file]
+  ([day part value input-file & extra-args]
     `(deftest ~(symbol (str "day" day "-" part "-test"))
       (testing ~(str "Day " day "." part " test")
-        (is (= ~value (~(symbol (str "day" day "-" part)) (slurp ~(str "testinputs/" input-file ".txt")))))
+        (is (= ~value (~(symbol (str "day" day "-" part)) (slurp ~(str "testinputs/" input-file ".txt")) ~@extra-args)))
       )
     )
   )
@@ -59,3 +60,5 @@
 (make-test 16 2 64)
 (make-test 17 1 "4,6,3,5,6,3,5,2,1,0" "day17-1")
 (make-test 17 2 117440 "day17-2")
+(make-test 18 1 22 "day18" 7 7 12)
+(make-test 18 2 "6,1" "day18" 7 7 12)

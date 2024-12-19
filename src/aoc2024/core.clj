@@ -63,6 +63,7 @@
       [17 1] (day17-1 input)
       [17 2] (day17-2 input)
       [18 1] (day18-1 input)
+      [18 2] (day18-2 input)
       [19 1] (day19-1 input)
       [19 2] (day19-2 input)
     )

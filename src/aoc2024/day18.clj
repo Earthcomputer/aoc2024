@@ -10,7 +10,7 @@
   )
 )
 
-(defn- dfs [grid width height]
+(defn- bfs [grid width height]
   (loop [
       queue [[0 0]]
       distances {[0 0] 0}
@@ -49,7 +49,7 @@
 
 (defn day18-1
   ([input] (day18-1 input 71 71 1024))
-  ([input width height amount] (dfs (set (take amount (parse-input input))) width height))
+  ([input width height amount] (bfs (set (take amount (parse-input input))) width height))
 )
 
 (defn day18-2
@@ -57,7 +57,7 @@
   ([input width height min-amount]
     (let [input (vec (parse-input input))]
       (loop [grid (set (take min-amount input)) i min-amount]
-        (if (nil? (dfs grid width height))
+        (if (nil? (bfs grid width height))
           (str/join "," (get input (dec i)))
           (recur (conj grid (get input i)) (inc i))
         )

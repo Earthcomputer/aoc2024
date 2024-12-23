@@ -20,6 +20,7 @@
             [aoc2024.day19 :refer :all]
             [aoc2024.day21 :refer :all]
             [aoc2024.day22 :refer :all]
+            [aoc2024.day23 :refer :all]
   ))
 
 (defmacro make-test
@@ -69,3 +70,5 @@
 (make-test 19 2 16)
 (make-test 21 1 126384)
 (make-test 22 2 23)
+(make-test 23 1 7)
+(make-test 23 2 "co,de,ka,ta")
